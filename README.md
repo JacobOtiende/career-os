@@ -26,6 +26,27 @@ targeted, evidence-traceable resume.
 - The proposal's 10 separate "agents" are implemented as functions in `ai/`, not separate processes — same separation of concerns, no operational overhead
 - Cover letters, LinkedIn content, monthly auto-review, promotion packages — natural next additions once the core loop (log → evidence → match → resume) is in daily use
 
+## Architecture
+
+A FastAPI backend (`backend/`) exposes a JSON API over the same SQLite
+database and `ai/` extraction/matching/resume logic used throughout. The
+frontend (`frontend/`) is plain HTML/CSS/JS — no build step, no framework —
+served as static files by the same FastAPI app, with real page layout
+(sidebar nav, cards, tables) instead of a forms-first widget UI.
+
+```
+backend/
+  main.py           FastAPI app, mounts the frontend, wires up routers
+  deps.py           DB session + ORM-to-dict helpers shared by all routers
+  routers/          one file per domain (worklogs, projects, achievements, ...)
+frontend/
+  index.html        app shell: sidebar + #content mount point
+  static/js/api.js  fetch wrapper for every backend endpoint
+  static/js/app.js  hash-based router, dispatches to Pages.<route>.render()
+  static/js/pages/  one file per page, each sets Pages.<name> = { render }
+db/, ai/, common.py  unchanged — same models and extraction/matching/resume logic
+```
+
 ## Setup
 
 ```bash
@@ -46,12 +67,12 @@ copy .env.example .env
 Run it:
 
 ```bash
-streamlit run app.py
+python run.py
 ```
 
-The database is a single SQLite file at `data/career.db`, created
-automatically on first run. Back it up like any other important file (or
-use the Data Export page).
+Then open **http://127.0.0.1:8000**. The database is a single SQLite file
+at `data/career.db`, created automatically on first run. Back it up like
+any other important file (or use the Data Export page).
 
 ## AI design principle (from the proposal, §15)
 

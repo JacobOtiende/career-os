@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Career OS</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+  <div id="app">
+    <nav class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">C</div>
+        <div class="brand-name">Career OS</div>
+      </div>
+
+      <div class="nav-group-label">Overview</div>
+      <a class="nav-link" data-route="dashboard"><span class="icon">&#9673;</span>Dashboard</a>
+
+      <div class="nav-group-label">Capture</div>
+      <a class="nav-link" data-route="worklog"><span class="icon">&#9998;</span>Daily Work Log</a>
+      <a class="nav-link" data-route="timetracking"><span class="icon">&#9201;</span>Time Tracking</a>
+      <a class="nav-link" data-route="projects"><span class="icon">&#128193;</span>Projects</a>
+      <a class="nav-link" data-route="achievements"><span class="icon">&#127942;</span>Achievements</a>
+      <a class="nav-link" data-route="volunteer"><span class="icon">&#129309;</span>Volunteer</a>
+
+      <div class="nav-group-label">Evidence</div>
+      <a class="nav-link" data-route="skills"><span class="icon">&#129504;</span>Skills</a>
+      <a class="nav-link" data-route="career"><span class="icon">&#129517;</span>Career Journey</a>
+
+      <div class="nav-group-label">Intelligence</div>
+      <a class="nav-link" data-route="jobs"><span class="icon">&#127919;</span>Job Analyzer</a>
+      <a class="nav-link" data-route="resumes"><span class="icon">&#128196;</span>Resume Generator</a>
+
+      <div class="nav-group-label">Data</div>
+      <a class="nav-link" data-route="export"><span class="icon">&#128190;</span>Data Export</a>
+
+      <div class="sidebar-footer">
+        <span id="ai-badge" class="ai-badge off">checking AI…</span>
+      </div>
+    </nav>
+
+    <main class="main" id="content"></main>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/render.js"></script>
+  <script src="/static/js/pages/dashboard.js"></script>
+  <script src="/static/js/pages/worklog.js"></script>
+  <script src="/static/js/pages/timetracking.js"></script>
+  <script src="/static/js/pages/projects.js"></script>
+  <script src="/static/js/pages/achievements.js"></script>
+  <script src="/static/js/pages/volunteer.js"></script>
+  <script src="/static/js/pages/skills.js"></script>
+  <script src="/static/js/pages/career.js"></script>
+  <script src="/static/js/pages/jobs.js"></script>
+  <script src="/static/js/pages/resumes.js"></script>
+  <script src="/static/js/pages/export.js"></script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
