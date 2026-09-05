@@ -170,6 +170,17 @@ class ResumeProfile(Base):
     created_at: Mapped[dt.datetime] = mapped_column(DateTime, default=now)
 
 
+class ResumeImport(Base):
+    __tablename__ = "resume_imports"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    filename: Mapped[str] = mapped_column(String(300))
+    file_path: Mapped[str] = mapped_column(String(500), default="")
+    raw_text: Mapped[str] = mapped_column(Text)
+    bullets_json: Mapped[str] = mapped_column(Text, default="[]")
+    # list of {text, title, category, skills, imported, achievement_id}
+    uploaded_at: Mapped[dt.datetime] = mapped_column(DateTime, default=now)
+
+
 class GeneratedResume(Base):
     __tablename__ = "generated_resumes"
     id: Mapped[int] = mapped_column(primary_key=True)

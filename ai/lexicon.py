@@ -4,6 +4,7 @@ configured, and as a candidate list the LLM is grounded against when one is.
 Extend freely -- this is just a starting seed, not a limit on what a user
 can record (free-text skills typed by the user are always kept too).
 """
+import re
 
 TECHNICAL_SKILLS = [
     "Python", "SQL", "PowerShell", "Bash", "Windows", "Linux", "macOS",
@@ -45,7 +46,11 @@ COMPETENCIES = [
 
 
 def find_keywords(text: str, vocabulary: list[str]) -> list[str]:
-    """Case-insensitive substring match of vocabulary terms in text,
-    preserving canonical casing from the vocabulary."""
-    lowered = text.lower()
-    return [term for term in vocabulary if term.lower() in lowered]
+    """Case-insensitive whole-word match of vocabulary terms in text,
+    preserving canonical casing from the vocabulary. Word-boundary matching
+    avoids substring false positives like "average" matching "RAG" or
+    "Trained" matching "AI"."""
+    return [
+        term for term in vocabulary
+        if re.search(r"(?<![a-zA-Z0-9])" + re.escape(term.lower()) + r"(?![a-zA-Z0-9])", text.lower())
+    ]

@@ -23,6 +23,21 @@ const Api = (() => {
   const post = (path, body) => request("POST", path, body || {});
   const del = (path) => request("DELETE", path);
 
+  async function upload(path, file) {
+    const formData = new FormData();
+    formData.append("file", file);
+    const res = await fetch(`/api${path}`, { method: "POST", body: formData });
+    if (!res.ok) {
+      let detail = res.statusText;
+      try {
+        const data = await res.json();
+        detail = data.detail || JSON.stringify(data);
+      } catch (e) {}
+      throw new Error(detail || `Upload failed (${res.status})`);
+    }
+    return res.json();
+  }
+
   return {
     status: () => get("/status"),
     dashboard: () => get("/dashboard"),
@@ -75,5 +90,11 @@ const Api = (() => {
 
     exportTables: () => get("/export/tables"),
     exportTable: (name) => get(`/export/table/${name}`),
+
+    resumeImports: () => get("/resume-imports"),
+    uploadResumeImport: (file) => upload("/resume-imports", file),
+    getResumeImport: (id) => get(`/resume-imports/${id}`),
+    importBullet: (importId, index, payload) => post(`/resume-imports/${importId}/bullets/${index}/import`, payload),
+    deleteResumeImport: (id) => del(`/resume-imports/${id}`),
   };
 })();

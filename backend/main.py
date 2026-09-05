@@ -12,7 +12,7 @@ from db.database import init_db
 from ai.client import llm_available
 from backend.routers import (
     dashboard, worklogs, projects, achievements, skills,
-    volunteer, career, jobs, resumes, export,
+    volunteer, career, jobs, resumes, resume_imports, export,
 )
 
 
@@ -24,7 +24,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="Career OS API", lifespan=lifespan)
 
-for module in (dashboard, worklogs, projects, achievements, skills, volunteer, career, jobs, resumes, export):
+for module in (dashboard, worklogs, projects, achievements, skills, volunteer, career, jobs, resumes, resume_imports, export):
     app.include_router(module.router, prefix="/api")
 
 
